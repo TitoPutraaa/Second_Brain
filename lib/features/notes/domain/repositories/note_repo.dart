@@ -3,6 +3,10 @@ import 'package:second_brain/features/notes/domain/entities/note.dart';
 
 abstract class NoteRepo {
   Future<List<Note>> getAllNote();
-  Future<List<Note>> getFavoriteNote();
-  Future<List<Kategori>> getKategoriNote(String kategori);
+  // Future<List<Note>> getFavoriteNote();
+  // Future<List<Kategori>> getKategoriNote(String kategori);
+  Future<void> saveNote(Note note);
+  // Future<void> deleteNote(Note id);
+  // Future<void> updateNote(Note note);
+  // Future<void> addKategori(Kategori kategori);
 }

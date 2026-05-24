@@ -10,7 +10,7 @@ class NoteRepoImpl implements NoteRepo {
 
   @override
   Future<List<Note>> getAllNote() async {
-    return await localDataSource.getCachedNote();
+    return await localDataSource.getAllNote();
   }
 
   @override
@@ -23,6 +23,6 @@ class NoteRepoImpl implements NoteRepo {
       isFavorite: note.isFavorite,
       isDeleted: note.isDeleted,
     );
-    await localDataSource.cacheNote(noteModel);
+    await localDataSource.saveNote(noteModel);
   }
 }

@@ -1,7 +1,7 @@
 import 'package:second_brain/features/notes/domain/entities/kategori.dart';
 
 class KategoriModel extends Kategori {
-  const KategoriModel({required super.idKategori, required super.kategoriName});
+  const KategoriModel({super.idKategori, required super.kategoriName});
 
   factory KategoriModel.fromMap(Map<String, dynamic> data) {
     return KategoriModel(

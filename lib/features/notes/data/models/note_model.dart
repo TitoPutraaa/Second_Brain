@@ -2,22 +2,22 @@ import 'package:second_brain/features/notes/domain/entities/note.dart';
 
 class NoteModel extends Note {
   const NoteModel({
-    required super.idNote,
+    super.idNote,
     required super.idKategori,
-    required super.content,
-    required super.judul,
-    required super.isFavorite,
-    required super.isDeleted,
+    super.content,
+    super.judul,
+    super.isFavorite,
+    super.isDeleted,
   });
 
   factory NoteModel.fromMap(Map<String, dynamic> data) {
     return NoteModel(
       idNote: data["idNote"],
       idKategori: data["idKategori"],
+      judul: data["judul"] ?? "",
       content: data["content"],
-      judul: data["judul"],
-      isFavorite: data["isFavorite"],
-      isDeleted: data["isDeleted"],
+      isFavorite: data["isFavorite"] ?? 0,
+      isDeleted: data["isDeleted"] ?? 0,
     );
   }
 

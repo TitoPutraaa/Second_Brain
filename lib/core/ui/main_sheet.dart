@@ -54,8 +54,15 @@ class _MainSheetState extends State<MainSheet> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Second Brain"), centerTitle: true),
-      body: IndexedStack(index: _currentIndex, children: screen),
+      appBar: AppBar(
+        title: Text("Second Brain"),
+        centerTitle: true,
+        backgroundColor: Colors.black38,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: IndexedStack(index: _currentIndex, children: screen),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) => setState(() => _currentIndex = index),

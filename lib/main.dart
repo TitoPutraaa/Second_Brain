@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:second_brain/core/ui/main_sheet.dart';
+import 'package:second_brain/features/notes/presentation/widgets/note_card.dart';
 
 void main() {
   runApp(const MyApp());

@@ -57,7 +57,7 @@ class _MainSheetState extends State<MainSheet> {
       appBar: AppBar(
         title: Text("Second Brain"),
         centerTitle: true,
-        backgroundColor: Colors.black38,
+        elevation: 2,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

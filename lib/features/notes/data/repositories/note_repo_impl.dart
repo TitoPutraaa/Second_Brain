@@ -19,7 +19,7 @@ class NoteRepoImpl implements NoteRepo {
       idNote: note.idNote,
       idKategori: note.idKategori,
       content: note.content,
-      judul: note.judul,
+      title: note.title,
       isFavorite: note.isFavorite,
       isDeleted: note.isDeleted,
     );

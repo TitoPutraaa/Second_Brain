@@ -5,7 +5,7 @@ class NoteModel extends Note {
     super.idNote,
     required super.idKategori,
     super.content,
-    super.judul,
+    super.title,
     super.isFavorite,
     super.isDeleted,
   });
@@ -14,7 +14,7 @@ class NoteModel extends Note {
     return NoteModel(
       idNote: data["idNote"],
       idKategori: data["idKategori"],
-      judul: data["judul"] ?? "",
+      title: data["title"] ?? "",
       content: data["content"],
       isFavorite: data["isFavorite"] ?? 0,
       isDeleted: data["isDeleted"] ?? 0,
@@ -26,7 +26,7 @@ class NoteModel extends Note {
       "idNote": idNote,
       "idKategori": idKategori,
       "content": content,
-      "judul": judul,
+      "title": title,
       "isFavorite": isFavorite,
       "isDeleted": isDeleted,
     };

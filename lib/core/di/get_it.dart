@@ -1,0 +1,41 @@
+import 'package:get_it/get_it.dart';
+import 'package:second_brain/core/database/database_helper.dart';
+import 'package:second_brain/features/notes/data/datasources/note_data_source.dart';
+import 'package:second_brain/features/notes/data/repositories/note_repo_impl.dart';
+import 'package:second_brain/features/notes/domain/repositories/note_repo.dart';
+import 'package:second_brain/features/notes/domain/usecases/get_all_note.dart';
+import 'package:second_brain/features/notes/domain/usecases/save_note.dart';
+import 'package:second_brain/features/notes/presentation/provider/notes_provider.dart';
+
+final getIt = GetIt.instance;
+
+void setup() async {
+  await registerDatabase();
+  registerDataSource();
+  registerRepository();
+  registerUseCase();
+  registerProvider();
+}
+
+Future registerDatabase() async {
+  getIt.registerSingleton(await DatabaseHelper().database);
+}
+
+void registerDataSource() async {
+  getIt.registerSingleton(NoteDataSource(dbHelper: getIt()));
+}
+
+void registerRepository() async {
+  getIt.registerSingleton<NoteRepo>(NoteRepoImpl(localDataSource: getIt()));
+}
+
+void registerUseCase() async {
+  getIt.registerSingleton(GetAllNote(getIt()));
+  getIt.registerSingleton(SaveNote(getIt()));
+}
+
+void registerProvider() async {
+  getIt.registerSingleton(
+    NotesProvider(getAllNote: getIt(), saveNote: getIt()),
+  );
+}

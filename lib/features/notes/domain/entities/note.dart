@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class Note extends Equatable {
   final int? idNote;
   final int idKategori;
-  final String? judul;
+  final String? title;
   final String? content;
   final bool? isFavorite, isDeleted;
 
@@ -11,7 +11,7 @@ class Note extends Equatable {
     this.idNote,
     required this.idKategori,
     this.content,
-    this.judul,
+    this.title,
     this.isFavorite,
     this.isDeleted,
   });
@@ -21,7 +21,7 @@ class Note extends Equatable {
     idNote,
     idKategori,
     content,
-    judul,
+    title,
     isFavorite,
     isDeleted,
   ];

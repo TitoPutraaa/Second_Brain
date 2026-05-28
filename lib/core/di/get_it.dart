@@ -9,7 +9,7 @@ import 'package:second_brain/features/notes/presentation/provider/notes_provider
 
 final getIt = GetIt.instance;
 
-void setup() async {
+Future setup() async {
   await registerDatabase();
   registerDataSource();
   registerRepository();
@@ -18,7 +18,7 @@ void setup() async {
 }
 
 Future registerDatabase() async {
-  getIt.registerSingleton(await DatabaseHelper().database);
+  getIt.registerSingleton<DatabaseHelper>(DatabaseHelper());
 }
 
 void registerDataSource() async {
@@ -35,7 +35,10 @@ void registerUseCase() async {
 }
 
 void registerProvider() async {
-  getIt.registerSingleton(
-    NotesProvider(getAllNote: getIt(), saveNote: getIt()),
+  getIt.registerFactory<NotesProvider>(
+    () => NotesProvider(
+      getAllNote: getIt<GetAllNote>(),
+      saveNote: getIt<SaveNote>(),
+    ),
   );
 }

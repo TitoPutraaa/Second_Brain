@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:second_brain/core/theme/clr_theme.dart';
 
 class NoteCard extends StatelessWidget {
-  const NoteCard({super.key});
+  final String title;
+  final String content;
+  const NoteCard({super.key, required this.title, required this.content});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class NoteCard extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              "Title card that also can be long text so what this is will be hmmmmm",
+              title,
               style: TextStyle(
                 color: ClrTheme.text1,
                 fontSize: 16,
@@ -28,10 +30,7 @@ class NoteCard extends StatelessWidget {
               maxLines: 2,
             ),
             Expanded(
-              child: Text(
-                "this is data card info that will be displayed by card and can get click when user want to if he wasnt that is okay i just sad this is data card info that will be displayed by card and can get click when user want to if he wasnt that is okay i just sad huhu",
-                style: TextStyle(color: ClrTheme.textp),
-              ),
+              child: Text(content, style: TextStyle(color: ClrTheme.textp)),
             ),
           ],
         ),

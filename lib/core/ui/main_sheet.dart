@@ -1,43 +1,7 @@
-// import 'package:flutter/material.dart';
-
-// class MainSheet extends StatefulWidget {
-//   const MainSheet({super.key});
-
-//   @override
-//   State<MainSheet> createState() => _MainSheetState();
-// }
-
-// class _MainSheetState extends State<MainSheet> {
-//   int pageIndex = 1;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: Text("Second Brain"), centerTitle: true),
-//       bottomNavigationBar: BottomNavigationBar(
-//         onTap: (value) {
-//           setState(() {});
-//         },
-//         currentIndex: pageIndex,
-
-//         items: const [
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.sticky_note_2),
-//             label: "Note",
-//           ),
-//           BottomNavigationBarItem(
-//             icon: Icon(Icons.favorite),
-//             label: "Favorite",
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:second_brain/features/notes/presentation/pages/favorite_page.dart';
 import 'package:second_brain/features/notes/presentation/pages/home_page.dart';
+import 'package:second_brain/features/notes/presentation/pages/note_page.dart';
 
 class MainSheet extends StatefulWidget {
   const MainSheet({super.key});
@@ -59,10 +23,7 @@ class _MainSheetState extends State<MainSheet> {
         centerTitle: true,
         elevation: 2,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: IndexedStack(index: _currentIndex, children: screen),
-      ),
+      body: IndexedStack(index: _currentIndex, children: screen),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) => setState(() => _currentIndex = index),
@@ -77,6 +38,20 @@ class _MainSheetState extends State<MainSheet> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => NotePage()),
+          );
+        },
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: Colors.white38),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Icon(Icons.add, fontWeight: FontWeight.w700),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

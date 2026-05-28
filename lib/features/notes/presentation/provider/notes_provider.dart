@@ -13,38 +13,39 @@ class NotesProvider with ChangeNotifier {
 
   NotesStatus status = NotesStatus.initial;
   String errorMessage = "";
+  List<Note> notes = [];
 
-  void getAllNotes() async {
+  Future<void> getAllNotes() async {
     status = NotesStatus.loading;
     notifyListeners();
 
     try {
-      await getAllNote.execute();
+      notes = await getAllNote.execute();
+      status = NotesStatus.success;
+      errorMessage = "";
     } catch (e) {
       status = NotesStatus.error;
       errorMessage = "Failed to get all notes. Errors : ${e.toString()}";
       notifyListeners();
-    } finally {
-      status = NotesStatus.success;
-      errorMessage = "";
-      notifyListeners();
     }
+
+    notifyListeners();
   }
 
-  void saveNewNote(Note note) async {
+  Future<void> saveNewNote(Note note) async {
     status = NotesStatus.loading;
     notifyListeners();
 
     try {
       await saveNote.execute(note);
+      status = NotesStatus.success;
+      errorMessage = "";
+      await getAllNotes();
+      return;
     } catch (e) {
       status = NotesStatus.error;
       errorMessage = "Failed to save new note. Errors : ${e.toString()}";
-      notifyListeners();
-    } finally {
-      status = NotesStatus.success;
-      errorMessage = "";
-      notifyListeners();
     }
+    notifyListeners();
   }
 }

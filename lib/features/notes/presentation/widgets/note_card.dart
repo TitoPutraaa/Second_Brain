@@ -10,7 +10,7 @@ class NoteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadiusGeometry.circular(10),
+        borderRadius: BorderRadius.circular(10),
         side: BorderSide(color: ClrTheme.primary),
       ),
       color: ClrTheme.secondary,

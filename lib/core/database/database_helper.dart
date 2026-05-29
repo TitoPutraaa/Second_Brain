@@ -13,29 +13,35 @@ class DatabaseHelper {
   Future<Database> _initDB() async {
     final dbDirPath = await getDatabasesPath();
     final path = join(dbDirPath, 'second_brain.db');
-    return openDatabase(path, version: 1, onCreate: _createDB);
+    return openDatabase(
+      path,
+      version: 1,
+      onCreate: _createDB,
+      onConfigure: _onConfigure,
+    );
+  }
+
+  static Future _onConfigure(Database db) async {
+    await db.execute('PRAGMA foreign_keys = ON');
   }
 
   Future _createDB(Database db, int version) async {
-    await db.execute('PRAGMA foreign_keys = ON');
-
     await db.execute('''
-    CREATE TABLE notes (
-      id_note TEXT AUTO_INCREMENT PRIMARY KEY,
-      id_kategori TEXT,
-      title TEXT NOT NULL,
-      content TEXT,
-      is_favorite NOT NULL DEFAULT 0,
-      is_deleted NOT NULL DEFAULT 0,
-      FOREIGN KEY (id_kategori) REFERENCES kategori (id_kategori)
+    CREATE TABLE kategori (
+      idKategori INTEGER PRIMARY KEY AUTOINCREMENT,
+      kategoriName TEXT NOT NULL
       );
     ''');
 
     await db.execute('''
-    CREATE TABLE kategori (
-      id_kategori TEXT AUTO_INCREMENT PRIMARY KEY,
-      id_note TEXT,
-      FOREIGN KEY (id_note) REFERENCES notes (id_note)
+    CREATE TABLE notes (
+      idNote INTEGER PRIMARY KEY AUTOINCREMENT,
+      idKategori INTEGER,
+      title TEXT,
+      content TEXT,
+      isFavorite INTEGER DEFAULT 0,
+      isDeleted INTEGER DEFAULT 0,
+      FOREIGN KEY (idKategori) REFERENCES kategori (idKategori)
       );
     ''');
   }

@@ -10,31 +10,31 @@ import 'package:second_brain/features/notes/presentation/provider/notes_provider
 final getIt = GetIt.instance;
 
 Future setup() async {
-  await registerDatabase();
+  registerDatabase();
   registerDataSource();
   registerRepository();
   registerUseCase();
   registerProvider();
 }
 
-Future registerDatabase() async {
+void registerDatabase() {
   getIt.registerSingleton<DatabaseHelper>(DatabaseHelper());
 }
 
-void registerDataSource() async {
+void registerDataSource() {
   getIt.registerSingleton(NoteDataSource(dbHelper: getIt()));
 }
 
-void registerRepository() async {
+void registerRepository() {
   getIt.registerSingleton<NoteRepo>(NoteRepoImpl(localDataSource: getIt()));
 }
 
-void registerUseCase() async {
+void registerUseCase() {
   getIt.registerSingleton(GetAllNote(getIt()));
   getIt.registerSingleton(SaveNote(getIt()));
 }
 
-void registerProvider() async {
+void registerProvider() {
   getIt.registerFactory<NotesProvider>(
     () => NotesProvider(
       getAllNote: getIt<GetAllNote>(),

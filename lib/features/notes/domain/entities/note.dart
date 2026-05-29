@@ -2,18 +2,19 @@ import 'package:equatable/equatable.dart';
 
 class Note extends Equatable {
   final int? idNote;
-  final int idKategori;
+  final int? idKategori;
   final String? title;
-  final String? content;
-  final bool? isFavorite, isDeleted;
+  final String content;
+  final int isFavorite;
+  final int isDeleted;
 
   const Note({
     this.idNote,
-    required this.idKategori,
-    this.content,
+    this.idKategori,
+    required this.content,
     this.title,
-    this.isFavorite,
-    this.isDeleted,
+    this.isFavorite = 0,
+    this.isDeleted = 0,
   });
 
   @override

@@ -5,7 +5,12 @@ class SaveNote {
   final NoteRepo noteRepo;
   SaveNote(this.noteRepo);
 
-  Future<void> execute(Note note) async {
-    return await noteRepo.saveNote(note);
+  Future<void> execute({required String title, required String content}) async {
+    if (content.trim().isEmpty) {
+      throw Exception("note content cannot empty");
+    }
+
+    final note = Note(title: title.trim(), content: content.trim());
+    await noteRepo.saveNote(note);
   }
 }

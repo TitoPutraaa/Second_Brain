@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
         return Center(child: CircularProgressIndicator());
 
       case NotesStatus.error:
-        return Center(child: Text("$provider.errorMessage"));
+        return Center(child: Text("${provider.errorMessage}"));
 
       case NotesStatus.success:
         return Scaffold(
@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
                 itemBuilder: (context, index) => NoteCard(
                   key: ValueKey(provider.notes[index].idNote),
                   title: provider.notes[index].title!,
-                  content: provider.notes[index].content!,
+                  content: provider.notes[index].content,
                 ),
               ),
             ],

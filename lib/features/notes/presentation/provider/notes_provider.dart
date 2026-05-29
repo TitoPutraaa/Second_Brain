@@ -32,12 +32,15 @@ class NotesProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> saveNewNote(Note note) async {
+  Future<void> saveNewNote({
+    required String title,
+    required String content,
+  }) async {
     status = NotesStatus.loading;
     notifyListeners();
 
     try {
-      await saveNote.execute(note);
+      await saveNote.execute(title: title, content: content);
       status = NotesStatus.success;
       errorMessage = "";
       await getAllNotes();

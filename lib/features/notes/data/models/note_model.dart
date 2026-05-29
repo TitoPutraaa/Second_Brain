@@ -3,8 +3,8 @@ import 'package:second_brain/features/notes/domain/entities/note.dart';
 class NoteModel extends Note {
   const NoteModel({
     super.idNote,
-    required super.idKategori,
-    super.content,
+    super.idKategori,
+    required super.content,
     super.title,
     super.isFavorite,
     super.isDeleted,
@@ -23,7 +23,7 @@ class NoteModel extends Note {
 
   Map<String, dynamic> toMap() {
     return {
-      "idNote": idNote,
+      if (idNote != null) 'idNote': idNote,
       "idKategori": idKategori,
       "content": content,
       "title": title,

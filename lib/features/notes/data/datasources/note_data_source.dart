@@ -1,4 +1,5 @@
 import 'package:second_brain/core/database/database_helper.dart';
+import 'package:second_brain/features/notes/data/models/kategori_model.dart';
 import 'package:second_brain/features/notes/data/models/note_model.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -21,5 +22,61 @@ class NoteDataSource {
       note.toMap(),
       conflictAlgorithm: ConflictAlgorithm.rollback,
     );
+  }
+
+  Future<NoteModel> getNotebyId(int idNote) async {
+    final db = await dbHelper.database;
+    var maps = await db.query(
+      'notes',
+      where: "idNote = ?",
+      whereArgs: [idNote],
+      limit: 1,
+    );
+    return NoteModel.fromMap(maps.first);
+  }
+
+  Future<void> deleteNote(int id) async {
+    final db = await dbHelper.database;
+    await db.delete("notes", where: "idNote = ?", whereArgs: [id]);
+  }
+
+  Future<void> updateNote(NoteModel note) async {
+    final db = await dbHelper.database;
+    await db.update(
+      "notes",
+      note.toMap(),
+      where: "idNote = ?",
+      whereArgs: [note],
+    );
+  }
+
+  Future<void> addKategori(KategoriModel kategori) async {
+    final db = await dbHelper.database;
+    await db.insert(
+      "notes",
+      kategori.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.rollback,
+    );
+  }
+
+  Future<List<NoteModel>> getFavoriteNote(int getFavorite) async {
+    final db = await dbHelper.database;
+    var fetch = await db.query(
+      "notes",
+      where: "isFavorite = ?",
+      whereArgs: [getFavorite],
+    );
+    return fetch.map((rows) => NoteModel.fromMap(rows)).toList();
+  }
+
+  Future<List<NoteModel>> getNoteByKategori(int kategori) async {
+    final db = await dbHelper.database;
+    var fetch = await db.query(
+      "notes",
+      where: "idKategori = ?",
+      whereArgs: [kategori],
+    );
+
+    return fetch.map((rows) => NoteModel.fromMap(rows)).toList();
   }
 }

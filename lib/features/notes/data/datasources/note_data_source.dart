@@ -46,7 +46,7 @@ class NoteDataSource {
       "notes",
       note.toMap(),
       where: "idNote = ?",
-      whereArgs: [note],
+      whereArgs: [note.idNote],
     );
   }
 

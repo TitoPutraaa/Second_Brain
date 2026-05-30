@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
         return Center(child: CircularProgressIndicator());
 
       case NotesStatus.error:
-        return Center(child: Text("${provider.errorMessage}"));
+        return Center(child: Text("$provider.errorMessage"));
 
       case NotesStatus.success:
         return Scaffold(

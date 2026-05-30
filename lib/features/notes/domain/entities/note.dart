@@ -26,4 +26,21 @@ class Note extends Equatable {
     isFavorite,
     isDeleted,
   ];
+
+  Note copyWith({
+    int? idKategori,
+    String? title,
+    String? content,
+    int? isFavorite,
+    int? isDeleted,
+  }) {
+    return Note(
+      idNote: idNote,
+      idKategori: idKategori ?? this.idKategori,
+      title: title ?? this.title,
+      content: content ?? this.content,
+      isFavorite: isFavorite ?? this.isFavorite,
+      isDeleted: isDeleted ?? this.isDeleted,
+    );
+  }
 }

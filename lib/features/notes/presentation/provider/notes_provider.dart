@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:second_brain/features/notes/domain/entities/kategori.dart';
 import 'package:second_brain/features/notes/domain/entities/note.dart';
 import 'package:second_brain/features/notes/domain/usecases/get_all_note.dart';
 import 'package:second_brain/features/notes/domain/usecases/save_note.dart';

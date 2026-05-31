@@ -4,7 +4,7 @@ import 'package:second_brain/features/notes/domain/repositories/note_repo.dart';
 class AddKategori {
   final NoteRepo noteRepo;
 
-  AddKategori({required this.noteRepo});
+  AddKategori(this.noteRepo);
 
   Future<void> execute({required String kategoriName}) async {
     if (kategoriName.isEmpty) {

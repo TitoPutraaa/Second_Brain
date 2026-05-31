@@ -4,7 +4,7 @@ import 'package:second_brain/features/notes/domain/repositories/note_repo.dart';
 class GetFavoriteNote {
   final NoteRepo noteRepo;
 
-  GetFavoriteNote({required this.noteRepo});
+  GetFavoriteNote(this.noteRepo);
 
   Future<List<Note>> execute(int idKategori) async {
     if (idKategori.isNegative) {

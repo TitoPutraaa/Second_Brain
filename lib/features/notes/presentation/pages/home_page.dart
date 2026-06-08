@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:second_brain/features/notes/domain/entities/kategori.dart';
+import 'package:second_brain/features/notes/presentation/pages/note_page.dart';
 import 'package:second_brain/features/notes/presentation/provider/notes_provider.dart';
 import 'package:second_brain/features/notes/presentation/widgets/kategori_btn.dart';
 import 'package:second_brain/features/notes/presentation/widgets/note_card.dart';
@@ -22,20 +24,43 @@ class HomePage extends StatelessWidget {
           body: CustomScrollView(
             slivers: [
               SliverToBoxAdapter(child: KategoriBtn()),
-              SliverGrid.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 3.5 / 4,
-                  crossAxisSpacing: 5,
-                  mainAxisSpacing: 3,
+              if (provider.notes.isEmpty)
+                const SliverFillRemaining(
+                  child: Center(child: Text("No notes yet. Tap + to add one!")),
+                )
+              else
+                SliverGrid.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 3.5 / 4,
+                    crossAxisSpacing: 5,
+                    mainAxisSpacing: 3,
+                  ),
+                  itemCount: provider.notes.length,
+                  itemBuilder: (context, index) {
+                    final note = provider.notes[index];
+                    final kategori = provider.categories.cast<Kategori>().firstWhere(
+                      (cat) => cat.idKategori == note.idKategori,
+                      orElse: () => const Kategori(kategoriName: ""),
+                    );
+                    return NoteCard(
+                      key: ValueKey(note.idNote),
+                      note: note,
+                      kategoriName:
+                          kategori.kategoriName.isEmpty
+                              ? null
+                              : kategori.kategoriName,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NotePage(note: note),
+                          ),
+                        );
+                      },
+                    );
+                  },
                 ),
-                itemCount: provider.notes.length,
-                itemBuilder: (context, index) => NoteCard(
-                  key: ValueKey(provider.notes[index].idNote),
-                  title: provider.notes[index].title!,
-                  content: provider.notes[index].content,
-                ),
-              ),
             ],
           ),
         );

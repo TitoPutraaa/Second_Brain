@@ -5,6 +5,7 @@ import 'package:second_brain/features/notes/data/repositories/note_repo_impl.dar
 import 'package:second_brain/features/notes/domain/repositories/note_repo.dart';
 import 'package:second_brain/features/notes/domain/usecases/add_kategori.dart';
 import 'package:second_brain/features/notes/domain/usecases/delete_note.dart';
+import 'package:second_brain/features/notes/domain/usecases/get_all_kategori.dart';
 import 'package:second_brain/features/notes/domain/usecases/get_all_note.dart';
 import 'package:second_brain/features/notes/domain/usecases/get_favorite_note.dart';
 import 'package:second_brain/features/notes/domain/usecases/get_note_by_id.dart';
@@ -42,8 +43,10 @@ void registerUseCase() {
   getIt.registerSingleton(DeleteNote(getIt()));
   getIt.registerSingleton(UpdateNote(getIt()));
   getIt.registerSingleton(AddKategori(getIt()));
+  getIt.registerSingleton(GetAllKategori(getIt()));
   getIt.registerSingleton(GetFavoriteNote(getIt()));
   getIt.registerSingleton(GetNoteByKategori(getIt()));
+  getIt.registerSingleton(GetNoteById(getIt()));
 }
 
 void registerProvider() {
@@ -54,6 +57,7 @@ void registerProvider() {
       deleteNote: getIt<DeleteNote>(),
       updateNote: getIt<UpdateNote>(),
       addKategori: getIt<AddKategori>(),
+      getAllKategori: getIt<GetAllKategori>(),
       getFavoriteNote: getIt<GetFavoriteNote>(),
       getNoteByKategori: getIt<GetNoteByKategori>(),
     ),

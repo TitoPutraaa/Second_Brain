@@ -10,4 +10,5 @@ abstract class NoteRepo {
   Future<void> addKategori(Kategori kategori);
   Future<List<Note>> getFavoriteNote(int getFavorite);
   Future<List<Note>> getNoteByKategori(int kategori);
+  Future<List<Kategori>> getAllKategori();
 }

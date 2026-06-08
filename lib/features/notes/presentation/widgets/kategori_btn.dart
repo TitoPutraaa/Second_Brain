@@ -1,9 +1,6 @@
-import 'dart:collection';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-const List<String> kategoriList = ["Personal", "Work", "Hobby"];
+import 'package:provider/provider.dart';
+import 'package:second_brain/features/notes/presentation/provider/notes_provider.dart';
 
 class KategoriBtn extends StatefulWidget {
   const KategoriBtn({super.key});
@@ -12,31 +9,93 @@ class KategoriBtn extends StatefulWidget {
   State<KategoriBtn> createState() => _KategoriBtnState();
 }
 
-typedef MenuEntry = DropdownMenuEntry<String>;
-
 class _KategoriBtnState extends State<KategoriBtn> {
-  static final List<MenuEntry> menuEntries = UnmodifiableListView<MenuEntry>(
-    kategoriList.map<MenuEntry>(
-      (String name) => MenuEntry(value: name, label: name),
-    ),
-  );
+  int? selectedKategoriId;
 
-  String dropDownValue = kategoriList.first;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 2),
+    final provider = context.watch<NotesProvider>();
+    final categories = provider.categories;
 
-      child: DropdownMenu(
-        width: double.infinity,
-        dropdownMenuEntries: menuEntries,
-        initialSelection: kategoriList.first,
-        onSelected: (String? value) {
-          setState(() {
-            dropDownValue = value!;
-          });
-        },
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: DropdownButtonFormField<int?>(
+                  decoration: const InputDecoration(
+                    labelText: "Filter by Category",
+                    border: OutlineInputBorder(),
+                  ),
+                  value: selectedKategoriId,
+                  items: [
+                    const DropdownMenuItem<int?>(
+                      value: null,
+                      child: Text("All Notes"),
+                    ),
+                    ...categories.map(
+                      (cat) => DropdownMenuItem<int?>(
+                        value: cat.idKategori,
+                        child: Text(cat.kategoriName),
+                      ),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    setState(() {
+                      selectedKategoriId = value;
+                    });
+                    if (value == null) {
+                      provider.getAllNotes();
+                    } else {
+                      provider.getNotesByCategoryProvider(value);
+                    }
+                  },
+                ),
+              ),
+              IconButton(
+                onPressed: () => _showAddKategoriDialog(context),
+                icon: const Icon(Icons.add_circle_outline),
+                tooltip: "Add Category",
+              ),
+            ],
+          ),
+        ],
       ),
+    );
+  }
+
+  void _showAddKategoriDialog(BuildContext context) {
+    final controller = TextEditingController();
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: const Text("Add Category"),
+            content: TextField(
+              controller: controller,
+              decoration: const InputDecoration(hintText: "Category Name"),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("Cancel"),
+              ),
+              TextButton(
+                onPressed: () {
+                  if (controller.text.isNotEmpty) {
+                    context.read<NotesProvider>().addKategoriProvider(
+                      controller.text,
+                    );
+                    Navigator.pop(context);
+                  }
+                },
+                child: const Text("Add"),
+              ),
+            ],
+          ),
     );
   }
 }

@@ -53,7 +53,7 @@ class NoteDataSource {
   Future<void> addKategori(KategoriModel kategori) async {
     final db = await dbHelper.database;
     await db.insert(
-      "notes",
+      "kategori",
       kategori.toMap(),
       conflictAlgorithm: ConflictAlgorithm.rollback,
     );
@@ -78,5 +78,12 @@ class NoteDataSource {
     );
 
     return fetch.map((rows) => NoteModel.fromMap(rows)).toList();
+  }
+
+  Future<List<KategoriModel>> getAllKategori() async {
+    final db = await dbHelper.database;
+    final List<Map<String, dynamic>> maps = await db.query('kategori');
+
+    return maps.map((row) => KategoriModel.fromMap(row)).toList();
   }
 }

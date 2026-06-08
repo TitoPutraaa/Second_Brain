@@ -55,6 +55,11 @@ class NoteRepoImpl implements NoteRepo {
   }
 
   @override
+  Future<List<Kategori>> getAllKategori() async {
+    return await localDataSource.getAllKategori();
+  }
+
+  @override
   Future<void> updateNote(Note note) async {
     final upd = NoteModel(
       idNote: note.idNote,

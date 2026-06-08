@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:second_brain/features/notes/presentation/pages/favorite_page.dart';
 import 'package:second_brain/features/notes/presentation/pages/home_page.dart';
 import 'package:second_brain/features/notes/presentation/pages/note_page.dart';
+import 'package:second_brain/features/notes/presentation/provider/notes_provider.dart';
 
 class MainSheet extends StatefulWidget {
   const MainSheet({super.key});
@@ -26,7 +28,14 @@ class _MainSheetState extends State<MainSheet> {
       body: IndexedStack(index: _currentIndex, children: screen),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        onTap: (index) => setState(() => _currentIndex = index),
+        onTap: (index) {
+          setState(() => _currentIndex = index);
+          if (index == 0) {
+            context.read<NotesProvider>().getAllNotes();
+          } else if (index == 1) {
+            context.read<NotesProvider>().getFavoriteNotesProvider(1);
+          }
+        },
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.sticky_note_2),
